@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasker Material UI</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@material-components/web@latest/dist/material-components-web.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@material-components/web@latest/dist/material-components-web.min.js"></script>
+  <style>
+    body {
+      font-family: Roboto, sans-serif;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    h1 {
+      font-weight: 400;
+      color: #333;
+    }
+    .mdc-button {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hello from Taske1111r!</h1>
+
+  <button class="mdc-button mdc-button--raised" onclick="buttonClicked()">
+    <span class="mdc-button__label">Click Me</span>
+  </button>
+
+  <script>
+    mdc.autoInit();
+
+    function buttonClicked() {
+      alert("Button clicked!");
+    }
+  </script>
+</body>
+</html>
