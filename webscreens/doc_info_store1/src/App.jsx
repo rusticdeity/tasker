@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import './App.css'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import {lightTheme, darkTheme } from './styles/theme_regular'
+import { Button, Typography, Box } from '@mui/material';
+import Home from './view/Home';
 
 function App() {
 
   return (
-    <>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ThemeProvider theme={lightTheme}>
+      <CssBaseline/>
+      <Home/>
+    </ThemeProvider>
   )
 }
 
