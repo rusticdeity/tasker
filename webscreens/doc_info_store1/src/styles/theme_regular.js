@@ -6,13 +6,13 @@ const basePalette = {
     main: '#6366F1',     // Indigo 500
     light: '#A5B4FC',
     dark: '#4338CA',
-    contrastText: '#FFFFFF',
+    contrastText: '#FFFFFF'
   },
   secondary: {
     main: '#F472B6',     // Pink 400
     light: '#FBCFE8',
     dark: '#BE185D',
-    contrastText: '#FFFFFF',
+    contrastText: '#FFFFFF'
   },
   error: {
     main: '#EF4444',     // Red 500
@@ -30,6 +30,7 @@ const basePalette = {
     main: '#10B981',     // Emerald 500
     contrastText: '#FFFFFF',
   },
+  
 };
 
 const lightTheme = responsiveFontSizes(createTheme({
@@ -44,6 +45,16 @@ const lightTheme = responsiveFontSizes(createTheme({
       primary: '#111827',  // gray-900
       secondary: '#6B7280', // gray-500
     },
+    components: {
+	MuiButton: {
+	  styleOverrides: {
+		containedPrimary: {
+		  background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)'
+		}
+	  }
+	}
+    }
   },
 }));
 
@@ -59,6 +70,16 @@ const darkTheme = responsiveFontSizes(createTheme({
       primary: '#F9FAFB',
       secondary: '#9CA3AF',
     },
+    components: {
+        MuiButton: {
+          styleOverrides: {
+                containedPrimary: {
+                  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)'
+                }
+          }
+        }
+    }                                                               
   },
 }));
 

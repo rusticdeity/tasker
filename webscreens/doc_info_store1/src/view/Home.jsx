@@ -14,9 +14,9 @@ import AddIcon from '@mui/icons-material/Add';
 
 const Home = () => {
   return (
-    <Box sx={{ minHeight: '100vh', position: 'relative', pb: 8 }}>
+    <Box sx={{ minHeight: '100vh', position: 'relative', width: '100vw' , pb: 0}}>
       {/* Navbar */}
-      <AppBar position="static" color="primary">
+      <AppBar position="sticky" color="primary">
         <Toolbar>
           <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
             <MenuIcon />
