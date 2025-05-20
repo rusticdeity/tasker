@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -8,13 +8,15 @@ import {
   Box,
   Fab,
   Container,
-} from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import AddIcon from '@mui/icons-material/Add';
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import AddIcon from "@mui/icons-material/Add";
 
 const Home = () => {
   return (
-    <Box sx={{ minHeight: '100vh', position: 'relative', width: '100vw' , pb: 0}}>
+    <Box
+      sx={{ minHeight: "100vh", position: "relative", width: "100vw", pb: 0 }}
+    >
       {/* Navbar */}
       <AppBar position="sticky" color="primary">
         <Toolbar>
@@ -24,12 +26,11 @@ const Home = () => {
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             MyApp
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
 
       {/* Main content */}
-      <Container maxWidth="sm" sx={{ py: 6, textAlign: 'center' }}>
+      <Container maxWidth="sm" sx={{ py: 6, textAlign: "center" }}>
         <Typography variant="h3" component="h1" gutterBottom>
           Welcome to MyApp
         </Typography>
@@ -43,10 +44,10 @@ const Home = () => {
 
       {/* Floating Action Button */}
       <Fab
-        color="secondary"
+        color="primary"
         aria-label="add"
         sx={{
-          position: 'fixed',
+          position: "fixed",
           bottom: 16,
           right: 16,
         }}
