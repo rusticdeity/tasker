@@ -33,7 +33,7 @@ const Home = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            MyApp
+            MyApp1
           </Typography>
         </Toolbar>
       </AppBar>
