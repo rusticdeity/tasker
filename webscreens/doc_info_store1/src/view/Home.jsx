@@ -15,6 +15,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 var myDataJson = "";
 const Home = () => {
+  alert("home");
   if (myDataJson === "") {
     AutoTools.sendCommand("/mydata/read")
   } else {
