@@ -11,12 +11,12 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AddIcon from "@mui/icons-material/Add";
-import { readData } from "../utils/AutotoolsUtils";
+
 
 var myDataJson = "";
 const Home = () => {
   if (myDataJson === "") {
-    readData();
+    AutoTools.sendCommand("/mydata/read")
   } else {
     alert(myDataJson);
   }
