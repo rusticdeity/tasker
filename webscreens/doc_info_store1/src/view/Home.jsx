@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -11,8 +11,16 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import AddIcon from "@mui/icons-material/Add";
+import { readData } from "../utils/AutotoolsUtils";
 
+var myDataJson = "";
 const Home = () => {
+  if (myDataJson === "") {
+    readData();
+  } else {
+    alert(myDataJson);
+  }
+  const [rootJson, setRootJson] = useState(myDataJson);
   return (
     <Box
       sx={{ minHeight: "100vh", position: "relative", width: "100vw", pb: 0 }}
