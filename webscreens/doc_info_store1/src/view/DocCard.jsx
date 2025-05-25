@@ -1,124 +1,149 @@
 // DocCard.js
-import React from 'react';
+import React from "react";
 import {
-    Paper,
-    Typography,
-    IconButton,
-    Box,
-    List,
-    ListItem,
-    ListItemText,
-    ListItemIcon,
-    Divider
-} from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete'; // Bin icon
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline'; // Minus icon
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  IconButton,
+  Box,
+  Stack,
+} from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit"; // Edit icon
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { motion, AnimatePresence } from "framer-motion"; // Import motion
 
-// Helper to attempt to stringify values safely for display
-const formatValue = (value) => {
-    if (typeof value === 'object' && value !== null) {
-        try {
-            return JSON.stringify(value);
-        } catch (e) {
-            return '[Object]';
-        }
-    }
-    return String(value);
+// Helper to display different types of values nicely
+const displayValue = (value) => {
+  if (typeof value === "object" && value !== null) {
+    return JSON.stringify(value, null, 2); // Pretty print JSON
+  }
+  return String(value);
 };
 
-const DocCard = ({ docName, docVals, onDeleteDocument, onDeleteEntry }) => {
-    if (!docName) return null; // Or some placeholder if docName is missing
+const entryAnimation = {
+  initial: { opacity: 0, height: 0, y: -10 },
+  animate: { opacity: 1, height: "auto", y: 0 },
+  exit: { opacity: 0, height: 0, y: -10, transition: { duration: 0.2 } },
+};
 
-    const handleDeleteDocument = () => {
-        if (onDeleteDocument) {
-            onDeleteDocument(docName);
+const DocCard = ({
+  docName,
+  docVals,
+  onDeleteDocument,
+  onDeleteEntry,
+  onEditDocument,
+}) => {
+  if (!docName || !docVals) {
+    return null;
+  }
+
+  return (
+    <Card
+      sx={{
+        mb: 2,
+        position: "relative",
+        boxShadow: 3,
+        overflow: "hidden" /* For exit animations */,
+      }}
+    >
+      <CardHeader
+        title={
+          <Typography variant="h6" component="div" sx={{ fontWeight: "bold" }}>
+            {docName}
+          </Typography>
         }
-    };
-
-    const handleDeleteEntry = (entryKey) => {
-        if (onDeleteEntry) {
-            onDeleteEntry(docName, entryKey);
-        }
-    };
-
-    return (
-        <Paper
-            elevation={3}
-            sx={{
-                p: 2, // padding
-                mb: 2, // margin bottom
-                textAlign: 'left', // Content left aligned
-                overflowWrap: 'break-word', // Text wrapping for all content within
-                wordWrap: 'break-word', // Older browser support for word-wrap
-            }}
-        >
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    mb: 1,
-                }}
+        action={
+          <>
+            <IconButton
+              aria-label="edit document"
+              onClick={() => onEditDocument(docName, docVals)} // Pass data to edit
+              sx={{ color: "primary.main", mr: 0.5 }}
             >
-                <Typography variant="h6" component="h3" sx={{ flexGrow: 1, mr: 1 }}>
-                    {docName}
-                </Typography>
-                <IconButton
-                    aria-label={`Delete document ${docName}`}
-                    onClick={handleDeleteDocument}
-                    color="error"
+              <EditIcon />
+            </IconButton>
+            <IconButton
+              aria-label="delete document"
+              onClick={() => onDeleteDocument(docName)}
+              sx={{ color: "error.main" }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          </>
+        }
+        sx={{ pb: 1, borderBottom: "1px solid rgba(0, 0, 0, 0.12)" }}
+      />
+      <CardContent sx={{ pt: 1 }}>
+        {Object.keys(docVals).length > 0 ? (
+          <AnimatePresence initial={false}>
+            {" "}
+            {/* initial={false} to prevent initial animation on load */}
+            {Object.entries(docVals).map(([key, value]) => (
+              <motion.div
+                key={key} // Crucial for AnimatePresence to track items
+                layout // Animates layout changes
+                variants={entryAnimation}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start", // Align items to top for multiline text
+                    py: 1,
+                    textAlign: "left",
+                    wordBreak: "break-word",
+                    overflowWrap: "break-word",
+                    "&:not(:last-child)": {
+                      borderBottom: "1px dashed rgba(0, 0, 0, 0.08)",
+                    },
+                  }}
                 >
-                    <DeleteIcon />
-                </IconButton>
-            </Box>
-
-            <Divider sx={{ mb: 2 }} />
-
-            {docVals && typeof docVals === 'object' && Object.keys(docVals).length > 0 ? (
-                <List dense disablePadding>
-                    {Object.entries(docVals).map(([key, value]) => (
-                        <ListItem
-                            key={key}
-                            disableGutters
-                            secondaryAction={
-                                <IconButton
-                                    edge="end"
-                                    aria-label={`Delete entry ${key} from ${docName}`}
-                                    onClick={() => handleDeleteEntry(key)}
-                                    size="small"
-                                >
-                                    <RemoveCircleOutlineIcon fontSize="small" />
-                                </IconButton>
-                            }
-                            sx={{
-                                // Ensure wrapping within list item text as well
-                                '& .MuiListItemText-primary': {
-                                    overflowWrap: 'break-word',
-                                    wordWrap: 'break-word',
-                                    whiteSpace: 'pre-wrap', // Preserves whitespace and newlines, and wraps
-                                },
-                                '& .MuiListItemText-secondary': {
-                                    overflowWrap: 'break-word',
-                                    wordWrap: 'break-word',
-                                    whiteSpace: 'pre-wrap',
-                                },
-                                pr: '40px', // Make space for the icon button
-                            }}
-                        >
-                            <ListItemText
-                                primary={`${key}:`}
-                                secondary={formatValue(value)} // Use helper to format value
-                            />
-                        </ListItem>
-                    ))}
-                </List>
-            ) : (
-                <Typography variant="body2" color="text.secondary">
-                    No entries in this document.
-                </Typography>
-            )}
-        </Paper>
-    );
+                  <Stack
+                    direction="column"
+                    sx={{
+                      flexGrow: 1,
+                      pr: 1,
+                      minWidth: 0 /* Important for text ellipsis/wrap */,
+                    }}
+                  >
+                    <Typography variant="caption" color="text.secondary">
+                      {key}:
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      component="div"
+                      sx={{ whiteSpace: "pre-wrap" }}
+                    >
+                      {displayValue(value)}
+                    </Typography>
+                  </Stack>
+                  <IconButton
+                    aria-label={`delete entry ${key}`}
+                    onClick={() => onDeleteEntry(docName, key)}
+                    size="small"
+                    sx={{
+                      color: "warning.dark",
+                      mt: 0.5 /* Adjust alignment */,
+                    }}
+                  >
+                    <RemoveCircleOutlineIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        ) : (
+          <Typography variant="body2" color="text.secondary">
+            No entries in this document.
+          </Typography>
+        )}
+      </CardContent>
+    </Card>
+  );
 };
 
 export default DocCard;
