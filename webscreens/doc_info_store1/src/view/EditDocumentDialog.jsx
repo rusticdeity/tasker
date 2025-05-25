@@ -87,13 +87,13 @@ const EditDocumentDialog = ({ open, onClose, documentData, onSave }) => {
           borderBottomLeftRadius: 0, // No rounding at the very bottom
           borderBottomRightRadius: 0,
           maxHeight: "65vh", // Max height to 65% of viewport height (adjust as needed)
-          // minHeight: '30vh', // Optional: ensure a minimum height
+          minHeight: '30vh', // Optional: ensure a minimum height
           boxShadow: "0px -5px 15px rgba(0,0,0,0.1)", // Custom shadow for bottom sheet
           pt: 0, // Remove default top padding of Paper if DialogTitle is used properly
         },
       }}
       // Optional: To make the backdrop slightly less dark if desired
-      // slotProps={{ backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.3)' } } }}
+	slotProps={{ backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.3)' } } }}
     >
       <DialogTitle
         id="edit-document-dialog-title"
@@ -122,7 +122,7 @@ const EditDocumentDialog = ({ open, onClose, documentData, onSave }) => {
       <DialogContent
         // id="edit-document-dialog-description" // Can add if DialogContentText is used
         sx={{
-          pt: 1, // Adjust padding to flow from title
+          pt: 3, // Adjust padding to flow from title
           pb: 2, // Space before actions
           // overflowY is handled by DialogContent by default if content exceeds maxHeight of Paper
         }}

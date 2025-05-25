@@ -123,59 +123,62 @@ const Home = () => {
     );
   };
   return (
-    <Box
-      sx={{ minHeight: "100vh", position: "relative", width: "100vw", pb: 0 }}
-    >
-      {/* Navbar */}
-      <AppBar position="sticky" color="primary">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Document Info Store
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
-      {/* Main content */}
-      <Container maxWidth="sm" sx={{ py: 6, textAlign: "center" }}>
-        <>
-          {Object.keys(rootJson).length > 0 ? (
-            showCards()
-          ) : (
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ mb: 4, textAlign: "center", mt: 5 }}
-            >
-              Please click on the "+" icon to add a new document.
-            </Typography>
-          )}
-          {editingDocData && (
-            <EditDocumentDialog
-              open={isEditDialogOpen}
-              onClose={handleCloseEditDialog}
-              documentData={editingDocData}
-              onSave={handleSaveDocument}
-            />
-          )}
-        </>
-      </Container>
-
-      {/* Floating Action Button */}
-      <Fab
-        color="primary"
-        aria-label="add"
-        sx={{
-          position: "fixed",
-          bottom: 16,
-          right: 16,
-        }}
+    <>
+      <Box
+        sx={{ minHeight: "100vh", position: "relative", pb: 0 }}
       >
-        <AddIcon />
-      </Fab>
-    </Box>
+        {/* Navbar */}
+        <AppBar position="sticky" color="primary">
+          <Toolbar>
+            <IconButton edge="start" color="inherit" sx={{ mr: 2 }}>
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              Document Info Store
+            </Typography>
+          </Toolbar>
+        </AppBar>
+
+        {/* Main content */}
+        <Container maxWidth="sm" sx={{ py: 6, textAlign: "center" }}>
+          <>
+            {Object.keys(rootJson).length > 0 ? (
+              showCards()
+            ) : (
+              <Typography
+                variant="body1"
+                color="text.secondary"
+                sx={{ mb: 4, textAlign: "center", mt: 5 }}
+              >
+                Please click on the "+" icon to add a new document.
+              </Typography>
+            )}
+          </>
+        </Container>
+
+        {/* Floating Action Button */}
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={handleAddDocument}
+          sx={{
+            position: "fixed",
+            bottom: 16,
+            right: 16,
+          }}
+        >
+          <AddIcon />
+        </Fab>
+      </Box>
+      {editingDocData && (
+        <EditDocumentDialog
+          open={isEditDialogOpen}
+          onClose={handleCloseEditDialog}
+          documentData={editingDocData}
+          onSave={handleSaveDocument}
+        />
+      )}
+    </>
   );
 };
 
