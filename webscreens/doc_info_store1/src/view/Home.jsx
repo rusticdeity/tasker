@@ -15,6 +15,10 @@ import DocCard from "./DocCard";
 import EditDocumentDialog from "./EditDocumentDialog";
 import { motion, AnimatePresence } from "framer-motion";
 
+const myDataJson=JSON.stringify({"Github":{
+    "PAT": "Mypat",
+    "Expiry": "Expiry"
+  }})
 const cardAnimation = {
   initial: { opacity: 0, y: 50, scale: 0.9 },
   animate: { opacity: 1, y: 0, scale: 1 },

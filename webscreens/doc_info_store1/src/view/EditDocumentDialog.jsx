@@ -70,30 +70,31 @@ const EditDocumentDialog = ({ open, onClose, documentData, onSave }) => {
       keepMounted // Good for transitions
       aria-labelledby="edit-document-dialog-title"
       aria-describedby="edit-document-dialog-description"
-      PaperProps={{
-        sx: {
-          position: "fixed",
-          bottom: 0,
-          left: { xs: "8px", sm: "16px" }, // Responsive left margin
-          right: { xs: "8px", sm: "16px" }, // Responsive right margin
-          width: {
-            // Auto width based on margins
-            xs: "calc(100% - 16px)",
-            sm: "calc(100% - 32px)",
-          },
-          m: 0, // Crucial to override default centering margins of Dialog
-          borderTopLeftRadius: "16px", // Rounded top corners
-          borderTopRightRadius: "16px",
-          borderBottomLeftRadius: 0, // No rounding at the very bottom
-          borderBottomRightRadius: 0,
-          maxHeight: "65vh", // Max height to 65% of viewport height (adjust as needed)
-          minHeight: '30vh', // Optional: ensure a minimum height
-          boxShadow: "0px -5px 15px rgba(0,0,0,0.1)", // Custom shadow for bottom sheet
-          pt: 0, // Remove default top padding of Paper if DialogTitle is used properly
-        },
-      }}
       // Optional: To make the backdrop slightly less dark if desired
-	slotProps={{ backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.3)' } } }}
+      slotProps={{
+        paper: {
+          sx: {
+            position: "fixed",
+            bottom: 0,
+            left: { xs: "8px", sm: "16px" }, // Responsive left margin
+            right: { xs: "8px", sm: "16px" }, // Responsive right margin
+            width: {
+              // Auto width based on margins
+              xs: "calc(100% - 16px)",
+              sm: "calc(100% - 32px)",
+            },
+            m: 0, // Crucial to override default centering margins of Dialog
+            borderTopLeftRadius: "16px", // Rounded top corners
+            borderTopRightRadius: "16px",
+            borderBottomLeftRadius: 0, // No rounding at the very bottom
+            borderBottomRightRadius: 0,
+            maxHeight: "65vh", // Max height to 65% of viewport height (adjust as needed)
+            minHeight: '30vh', // Optional: ensure a minimum height
+            boxShadow: "0px -5px 15px rgba(0,0,0,0.1)", // Custom shadow for bottom sheet
+            pt: 0, // Remove default top padding of Paper if DialogTitle is used properly
+          },
+        }, backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.3)' } }
+      }}
     >
       <DialogTitle
         id="edit-document-dialog-title"
@@ -135,7 +136,7 @@ const EditDocumentDialog = ({ open, onClose, documentData, onSave }) => {
           fullWidth
           value={docName}
           onChange={handleDocNameChange}
-          sx={{ mb: 2.5 }}
+          sx={{ mb: 2.5, mt: 1.5 }}
           variant="outlined"
           size="small"
         />
@@ -172,10 +173,10 @@ const EditDocumentDialog = ({ open, onClose, documentData, onSave }) => {
       <DialogActions
         sx={{ p: "16px 24px", borderTop: "1px solid rgba(0,0,0,0.12)" }}
       >
-        <Button onClick={onClose} color="inherit">
+        <Button onClick={onClose} color="secondary.main">
           Cancel
         </Button>
-        <Button onClick={handleSave} variant="contained" color="primary">
+        <Button onClick={handleSave} variant="contained" color="secondary">
           Save
         </Button>
       </DialogActions>
