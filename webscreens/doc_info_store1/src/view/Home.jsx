@@ -15,10 +15,12 @@ import DocCard from "./DocCard";
 import EditDocumentDialog from "./EditDocumentDialog";
 import { motion, AnimatePresence } from "framer-motion";
 
-const myDataJson=JSON.stringify({"Github":{
-    "PAT": "Mypat",
-    "Expiry": "Expiry"
-  }})
+//const myDataJson = JSON.stringify({
+//Github: {
+//PAT: "Mypat",
+//Expiry: "Expiry",
+//},
+//});
 const cardAnimation = {
   initial: { opacity: 0, y: 50, scale: 0.9 },
   animate: { opacity: 1, y: 0, scale: 1 },
@@ -38,7 +40,7 @@ const Home = () => {
     setEditingDocData({
       originalName: newDocName,
       name: newDocName,
-      values: { property1: "value1" },
+      values: {},
     });
     setIsEditDialogOpen(true);
     // Or, if you want to add directly without dialog first:
@@ -64,6 +66,17 @@ const Home = () => {
       const updatedEntries = { ...docToUpdate };
       delete updatedEntries[entryKeyToDelete];
 
+      return {
+        ...prev,
+        [docName]: updatedEntries,
+      };
+    });
+  };
+  const onAddEntry = (docName, key, value) => {
+    setRootJson((prev) => {
+      const docToUpdate = prev[docName];
+      const updatedEntries = { ...docToUpdate };
+      updatedEntries[key] = value;
       return {
         ...prev,
         [docName]: updatedEntries,
@@ -119,6 +132,7 @@ const Home = () => {
               docVals={docVals}
               onDeleteDocument={handleDeleteDocument}
               onDeleteEntry={handleDeleteEntry}
+              onAddEntry={onAddEntry}
               onEditDocument={handleOpenEditDialog} // Pass handler to open dialog
             />
           </motion.div>
@@ -128,9 +142,7 @@ const Home = () => {
   };
   return (
     <>
-      <Box
-        sx={{ minHeight: "100vh", position: "relative", pb: 0 }}
-      >
+      <Box sx={{ minHeight: "100vh", position: "relative", pb: 0 }}>
         {/* Navbar */}
         <AppBar position="sticky" color="primary">
           <Toolbar>

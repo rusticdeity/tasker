@@ -70,26 +70,25 @@ const DocCard = ({
     setNewValue("");
   };
 
-  const handleSaveOrCloseAddForm = () => {
-    alert(trimmedKey);
-    const trimmedKey = newKey.trim();
-    const trimmedValue = newValue.trim();
+  const handleSaveOrCloseAddForm = (a) => {
+    if (a) {
+      const trimmedKey = newKey.trim();
+      const trimmedValue = newValue.trim();
 
-    if (isAdding && trimmedKey && trimmedValue) {
-      // Check isAdding to ensure it's a save action from the save button
-      // and both key and value are provided
-      onAddEntry(docName, trimmedKey, trimmedValue);
+      if (isAdding && trimmedKey && trimmedValue) {
+        // Check isAdding to ensure it's a save action from the save button
+        // and both key and value are provided
+        onAddEntry(docName, trimmedKey, trimmedValue);
+      }
+
+      // Always close form and reset state, regardless of save success or empty fields
+      setIsAdding(false);
+      // It's good practice to clear them immediately after processing.
+      setNewKey("");
+      setNewValue("");
+    } else {
+      handleOpenAddEntryForm();
     }
-
-    // Always close form and reset state, regardless of save success or empty fields
-    setIsAdding(false);
-    // Clearing newKey/newValue will happen on next open or can be done here too
-    // setNewKey("");
-    // setNewValue("");
-    // It's good practice to clear them immediately after processing.
-    alert("hete");
-	  setNewKey(""); 
-    setNewValue("");
   };
 
   return (
@@ -98,7 +97,8 @@ const DocCard = ({
         mb: 2,
         position: "relative",
         boxShadow: 3,
-        overflow: "hidden" /* For exit animations and containing absolutely positioned elements */,
+        overflow:
+          "hidden" /* For exit animations and containing absolutely positioned elements */,
       }}
     >
       <CardHeader
@@ -191,7 +191,11 @@ const DocCard = ({
           // Show "No entries" only if not in adding mode and docVals is empty
           Object.keys(docVals).length === 0 &&
           !isAdding && (
-            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', py: 2 }}>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              sx={{ textAlign: "center", py: 2 }}
+            >
               No entries in this document.
             </Typography>
           )
@@ -207,17 +211,20 @@ const DocCard = ({
               initial="initial"
               animate="animate"
               exit="exit"
-              style={{ overflow: 'hidden', marginTop: '16px' }} // marginTop for spacing from last item
+              style={{ overflow: "hidden", marginTop: "16px" }} // marginTop for spacing from last item
             >
               {/* Using Box as form to enable submit on Enter, though button is external */}
-              <Box 
-                component="form" 
-                onSubmit={(e) => { 
-                  e.preventDefault(); 
-                  handleSaveOrCloseAddForm(); 
+              <Box
+                component="form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSaveOrCloseAddForm();
                 }}
-              > 
-                <Stack spacing={2} sx={{ p: 1.5, border: '1px dashed #ccc', borderRadius: 1}}>
+              >
+                <Stack
+                  spacing={2}
+                  sx={{ p: 1.5, border: "1px dashed #ccc", borderRadius: 1 }}
+                >
                   <TextField
                     label="Key"
                     variant="outlined"
@@ -247,7 +254,7 @@ const DocCard = ({
       {/* Floating Add/Save Button */}
       <IconButton
         aria-label={isAdding ? "Save new entry" : "Add new entry"}
-        onClick={isAdding ? handleSaveOrCloseAddForm : handleOpenAddEntryForm}
+        onClick={() => handleSaveOrCloseAddForm(isAdding)}
         size="small" // Makes the icon button larger, more like a FAB
         sx={{
           position: "absolute",
@@ -256,12 +263,16 @@ const DocCard = ({
           backgroundColor: isAdding ? "success.main" : "primary.main",
           color: "common.white",
           boxShadow: 3,
-          '&:hover': {
+          "&:hover": {
             backgroundColor: isAdding ? "success.dark" : "primary.dark",
           },
         }}
       >
-        {isAdding ? <SaveIcon fontSize="small"/> : <AddIcon fontSize="small"/>}
+        {isAdding ? (
+          <SaveIcon fontSize="small" />
+        ) : (
+          <AddIcon fontSize="small" />
+        )}
       </IconButton>
     </Card>
   );

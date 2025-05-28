@@ -89,11 +89,12 @@ const EditDocumentDialog = ({ open, onClose, documentData, onSave }) => {
             borderBottomLeftRadius: 0, // No rounding at the very bottom
             borderBottomRightRadius: 0,
             maxHeight: "65vh", // Max height to 65% of viewport height (adjust as needed)
-            minHeight: '30vh', // Optional: ensure a minimum height
+            minHeight: "30vh", // Optional: ensure a minimum height
             boxShadow: "0px -5px 15px rgba(0,0,0,0.1)", // Custom shadow for bottom sheet
             pt: 0, // Remove default top padding of Paper if DialogTitle is used properly
           },
-        }, backdrop: { sx: { backgroundColor: 'rgba(0, 0, 0, 0.3)' } }
+        },
+        backdrop: { sx: { backgroundColor: "rgba(0, 0, 0, 0.3)" } },
       }}
     >
       <DialogTitle
