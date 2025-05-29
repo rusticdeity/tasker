@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -16,10 +16,10 @@ import EditDocumentDialog from "./EditDocumentDialog";
 import { motion, AnimatePresence } from "framer-motion";
 
 //const myDataJson = JSON.stringify({
-//Github: {
-//PAT: "Mypat",
-//Expiry: "Expiry",
-//},
+  //Github: {
+    //PAT: "Mypat",
+    //Expiry: "Expiry",
+  //},
 //});
 const cardAnimation = {
   initial: { opacity: 0, y: 50, scale: 0.9 },
@@ -28,12 +28,16 @@ const cardAnimation = {
 };
 
 const Home = () => {
-  const [rootJson, setRootJson] = useState(
-    myDataJson ? JSON.parse(myDataJson) : {},
-  );
+  const initialJson = myDataJson ? JSON.parse(myDataJson) : {};
+  const [rootJson, setRootJson] = useState(initialJson);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [editingDocData, setEditingDocData] = useState(null);
-
+  useEffect(() => {
+    if (initialJson !== rootJson) {
+      AutoTools.sendCommand("/mydata/save", JSON.stringify(rootJson), true);
+    }
+    //alert(JSON.stringify(rootJson));
+  }, [rootJson]);
   const handleAddDocument = () => {
     const newDocName = `New Document ${Object.keys(rootJson).length + 1}`;
     // Open dialog to edit the new document immediately

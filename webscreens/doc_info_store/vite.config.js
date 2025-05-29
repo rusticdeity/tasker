@@ -1,18 +1,20 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
 import { viteSingleFile } from 'vite-plugin-singlefile'
+import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   root: resolve(__dirname, 'src'),
-  plugins: [viteSingleFile()],
+  plugins: [react(),viteSingleFile()],
   build: {
     outDir: '../dist',
     assetsInlineLimit: Infinity, // Inline all assets
     cssCodeSplit: false,
-    rollUpOptions: {
+    rollupOptions: {
+	input: 'src/index.html',
 	output:{
 	  inlineDynamicImports: true,
-	  manualChunks: undefined	
+	  manualChunks: undefined,
 	}    
     }
   },
